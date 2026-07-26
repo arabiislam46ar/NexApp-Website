@@ -2,9 +2,15 @@ import Link from "next/link";
 import { Pencil, Trash2 } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { deleteApp, toggleStatus } from "@/app/admin/actions";
+import SavedToast from "@/components/SavedToast";
 import type { App } from "@/lib/types";
 
-export default async function AdminPage() {
+export default async function AdminPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ saved?: string }>;
+}) {
+  const { saved } = await searchParams;
   const supabase = await createClient();
   const { data: apps } = await supabase
     .from("apps")
@@ -13,7 +19,8 @@ export default async function AdminPage() {
 
   return (
     <div>
-      <div className="flex items-center justify-between">
+      <SavedToast saved={saved === "1"} />
+      <div className="flex items-center justify-between">;
         <div>
           <h1 className="font-display text-2xl font-bold">Manage apps</h1>
           <p className="mt-1 text-sm text-text-muted">

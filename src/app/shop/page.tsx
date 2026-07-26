@@ -35,8 +35,10 @@ export default async function AppsPage({
 
   return (
     <div className="mx-auto max-w-6xl px-6 py-14">
-      <h1 className="font-display text-3xl font-bold">Browse apps</h1>
-      <p className="mt-2 text-text-muted">
+      <h1 className="text-center font-display text-4xl font-extrabold sm:text-5xl">
+        Shop Now <span className="aurora-text">&gt;</span>
+      </h1>
+      <p className="mt-2 text-center text-text-muted">
         Search the catalog or filter by category.
       </p>
 

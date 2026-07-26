@@ -37,3 +37,12 @@ export type Profile = {
   avatar_url: string | null;
   role: "user" | "admin";
 };
+
+export type Source = {
+  id: string;
+  app_id: string;
+  github_url: string;
+  created_at: string;
+  updated_at: string;
+  apps?: { name: string; slug: string; icon_url: string | null } | null;
+};

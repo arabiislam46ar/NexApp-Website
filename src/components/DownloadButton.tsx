@@ -4,6 +4,7 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Download, Loader2, Monitor, Smartphone, Globe, X } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
+import { toast } from "@/lib/toast";
 import type { PlatformGroup, PlatformLink } from "@/lib/types";
 
 const GROUP_META: Record<PlatformGroup, { label: string; icon: typeof Monitor }> = {
@@ -39,6 +40,7 @@ export default function DownloadButton({
     setLoadingLabel(null);
     setOpen(false);
     window.open(link.url, "_blank", "noopener,noreferrer");
+    toast(`Download started — ${link.label}`, "success");
   }
 
   // Single download link — skip the picker and go straight there.

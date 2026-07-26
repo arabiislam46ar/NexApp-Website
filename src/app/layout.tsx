@@ -3,6 +3,7 @@ import { Sora, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import Toaster from "@/components/Toaster";
 
 const sora = Sora({
   variable: "--font-display-face",

@@ -8,6 +8,7 @@ import { Menu, X } from "lucide-react";
 import type { User } from "@supabase/supabase-js";
 import { createClient } from "@/lib/supabase/client";
 import ThemeToggle from "@/components/ThemeToggle";
+import UserMenu from "@/components/UserMenu";
 import LogoutButton from "@/components/LogoutButton";
 
 export default function Navbar() {
@@ -66,14 +67,12 @@ export default function Navbar() {
           <Link href="/shop" className="transition-colors hover:text-text">
             Shop
           </Link>
+          <Link href="/source" className="transition-colors hover:text-text">
+            Source
+          </Link>
           {isAdmin && (
             <Link href="/admin" className="transition-colors hover:text-text">
               Admin
-            </Link>
-          )}
-          {user && (
-            <Link href="/downloads" className="transition-colors hover:text-text">
-              My Downloads
             </Link>
           )}
         </div>
@@ -83,20 +82,20 @@ export default function Navbar() {
 
           <div className="hidden items-center gap-3 sm:flex">
             {user ? (
-              <LogoutButton />
+              <UserMenu user={user} isAdmin={isAdmin} />
             ) : (
               <>
                 <Link
-                  href="/login"
+                  href="/downloads"
                   className="text-sm text-text-muted transition-colors hover:text-text"
                 >
-                  Log in
+                  My Downloads
                 </Link>
                 <Link
-                  href="/signup"
-                  className="aurora-border rounded-full bg-surface-2 px-4 py-1.5 text-sm font-medium"
+                  href="/login"
+                  className="aurora-border glass-card rounded-full px-4 py-1.5 text-sm font-medium"
                 >
-                  Sign up
+                  Sign in
                 </Link>
               </>
             )}
@@ -125,6 +124,9 @@ export default function Navbar() {
               <Link href="/shop" className="hover:text-text">
                 Shop
               </Link>
+              <Link href="/source" className="hover:text-text">
+                Source
+              </Link>
               {isAdmin && (
                 <Link href="/admin" className="hover:text-text">
                   Admin
@@ -140,7 +142,7 @@ export default function Navbar() {
               ) : (
                 <>
                   <Link href="/login" className="hover:text-text">
-                    Log in
+                    Sign in
                   </Link>
                   <Link
                     href="/signup"

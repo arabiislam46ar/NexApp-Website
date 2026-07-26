@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { LayoutGrid } from "lucide-react";
+import { LayoutGrid, GitBranch } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import DownloadButton from "@/components/DownloadButton";
 import ScreenshotGallery from "@/components/ScreenshotGallery";
@@ -23,6 +23,12 @@ export default async function AppDetailPage({
   if (!app) notFound();
 
   const typedApp = { ...(app as App), platform_links: (app as App).platform_links ?? [] };
+
+  const { data: source } = await supabase
+    .from("sources")
+    .select("github_url")
+    .eq("app_id", typedApp.id)
+    .maybeSingle();
 
   return (
     <div className="mx-auto max-w-4xl px-6 py-14">
@@ -61,6 +67,16 @@ export default async function AppDetailPage({
             </span>
           ))}
         </div>
+        {source?.github_url && (
+          <a
+            href={source.github_url}
+            target="_blank"
+            rel="noreferrer"
+            className="glass-card aurora-border ml-auto flex items-center gap-1.5 rounded-full px-4 py-2 text-xs font-medium transition-transform hover:scale-[1.03]"
+          >
+            <GitBranch size={13} /> View Source
+          </a>
+        )}
       </div>
 
       <ScreenshotGallery screenshots={typedApp.screenshots} appName={typedApp.name} />

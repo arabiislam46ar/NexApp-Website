@@ -101,7 +101,7 @@ export async function saveApp(formData: FormData) {
   revalidatePath("/admin");
   revalidatePath("/shop");
   revalidatePath("/");
-  redirect("/admin");
+  redirect("/admin?saved=1");
 }
 
 export async function deleteApp(formData: FormData) {

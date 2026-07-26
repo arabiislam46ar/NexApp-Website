@@ -13,32 +13,25 @@ export default function AppCard({ app }: { app: App }) {
     >
       <Link
         href={`/shop/${app.slug}`}
-        className="group glass-card aurora-border aurora-glow flex h-full flex-col gap-4 rounded-2xl p-5"
+        className="group glass-card aurora-border aurora-glow flex h-full flex-col items-center gap-3 rounded-2xl p-6 text-center"
       >
-        <div className="flex items-center gap-3">
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-surface-2 text-text-muted overflow-hidden">
-            {app.icon_url ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={app.icon_url} alt="" className="h-full w-full object-cover" />
-            ) : (
-              <LayoutGrid size={20} />
-            )}
-          </div>
-          <div className="min-w-0">
-            <p className="truncate font-display text-base font-semibold">{app.name}</p>
-            {app.categories?.name && (
-              <p className="truncate font-mono text-xs text-text-muted">
-                {app.categories.name}
-              </p>
-            )}
-          </div>
+        <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-2xl bg-surface-2 text-text-muted overflow-hidden">
+          {app.icon_url ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={app.icon_url} alt="" className="h-full w-full object-cover" />
+          ) : (
+            <LayoutGrid size={28} />
+          )}
         </div>
 
-        {app.tagline && (
-          <p className="line-clamp-2 text-sm text-text-muted">{app.tagline}</p>
-        )}
+        <div className="min-w-0">
+          <p className="truncate font-display text-lg font-bold aurora-text">{app.name}</p>
+          {app.tagline && (
+            <p className="mt-1 line-clamp-2 text-sm text-text-muted">{app.tagline}</p>
+          )}
+        </div>
 
-        <div className="mt-auto flex items-center justify-between font-mono text-xs text-text-muted">
+        <div className="mt-auto flex items-center gap-3 pt-2 font-mono text-xs text-text-muted">
           <span>v{app.version}</span>
           <span className="flex items-center gap-1">
             <Download size={12} /> {app.downloads_count.toLocaleString()}

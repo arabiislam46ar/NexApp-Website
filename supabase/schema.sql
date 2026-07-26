@@ -203,3 +203,28 @@ create policy "Admins can delete app assets"
 -- To make yourself an admin after signing up once, run:
 --   update public.profiles set role = 'admin' where id = (select id from auth.users where email = 'you@gmail.com');
 -- ============================================================
+
+-- 9. SOURCES — one GitHub repo link per app, shown on that app's page ----
+create table if not exists public.sources (
+  id uuid primary key default gen_random_uuid(),
+  app_id uuid not null references public.apps(id) on delete cascade unique,
+  github_url text not null,
+  created_by uuid references public.profiles(id) on delete set null,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+alter table public.sources enable row level security;
+
+drop policy if exists "Sources are public" on public.sources;
+create policy "Sources are public" on public.sources for select using (true);
+
+drop policy if exists "Admins manage sources" on public.sources;
+create policy "Admins manage sources" on public.sources for all
+  using (public.is_admin(auth.uid()))
+  with check (public.is_admin(auth.uid()));
+
+drop trigger if exists sources_touch_updated_at on public.sources;
+create trigger sources_touch_updated_at
+  before update on public.sources
+  for each row execute procedure public.touch_updated_at();
